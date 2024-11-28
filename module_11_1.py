@@ -2,6 +2,8 @@
 import ast
 import pandas as pd
 import matplotlib.pyplot as plt
+
+
 with open('study_arr.txt','r', encoding='utf-8') as file:
     data_file=file.readlines()
     list_study=[]
@@ -17,9 +19,14 @@ data_11_st=df[lambda x: x['class_study'] == 11]
 data_10_st=df[lambda x: x['class_study'] == 10]
 
 
-summed_10_point = data_10_st.groupby('class_study')['point_study'].sum()   #Находим среднее значение баллов по классу
-a=summed_10_point.loc [0:0]
-print(summed_10_point,'summed_10_point',len(data_10_st))
+
+
+mean_10_point = data_10_st.groupby('class_study')['point_study'].transform('mean')   #Находим среднее значение баллов по 10 классу
+mean_11_point = data_11_st.groupby('class_study')['point_study'].transform('mean')   #Находим среднее значение баллов по 11 классу
+
+
+print(mean_10_point[1].round(2), "Средний бал в 10 классе")
+print(mean_11_point[0].round(2), "Средний бал в 11 классе")
 
 
 
@@ -28,13 +35,13 @@ img1=data_11_st['point_study'].plot.hist() # Построение гистогр
 plt.title('Гистрограмма оценок в 11 классе')
 plt.xlabel('Оценка')
 plt.ylabel('Кол-во учащихся получивших оценку')
-#plt.show()
+plt.show()
 img2=data_10_st['point_study'].plot.hist() # Построение гистограммы по колонке оценки в 11 классе
 plt.title('Гистрограмма оценок в 10 классе')
 plt.xlabel('Оценка')
 plt.ylabel('Кол-во учащихся получивших оценку')
 
-#plt.show()
+plt.show()
 
 
 
